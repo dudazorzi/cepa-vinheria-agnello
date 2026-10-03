@@ -7,7 +7,7 @@ Projeto acadêmico da fase 2 de Engenharia de Software da FIAP. O CEPA propõe u
 - [`web/`](web/) — aplicação Java com Servlets, JSP, HTML e CSS. Inclui catálogo, quiz de paladar, ficha do vinho, carrinho demonstrativo, Minha Adega e painel da vinheria.
 - `android/` — reservado para a interface mobile em Kotlin e Jetpack Compose prevista nesta fase.
 
-As instruções para compilar, executar e configurar o Cloud Firestore estão no [README da aplicação web](web/README.md).
+Para executar a versão web no Windows, instale Java 17 e dê dois cliques em [`iniciar-web.cmd`](iniciar-web.cmd). Depois abra `http://localhost:8081/cepa/`. Maven e Tomcat são baixados automaticamente na primeira execução. As instruções completas e a configuração do Cloud Firestore estão no [README da aplicação web](web/README.md).
 
 ## Estado do projeto
 

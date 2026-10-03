@@ -7,5 +7,26 @@
     <dependency><groupId>jakarta.servlet</groupId><artifactId>jakarta.servlet-api</artifactId><version>6.0.0</version><scope>provided</scope></dependency>
     <dependency><groupId>com.google.firebase</groupId><artifactId>firebase-admin</artifactId><version>9.11.0</version></dependency>
   </dependencies>
-  <build><finalName>cepa</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.0</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>3.4.0</version></plugin></plugins></build>
+  <build><finalName>cepa</finalName><plugins>
+    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.0</version></plugin>
+    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>3.4.0</version></plugin>
+    <plugin>
+      <groupId>org.codehaus.cargo</groupId><artifactId>cargo-maven3-plugin</artifactId><version>1.10.29</version>
+      <configuration>
+        <container>
+          <containerId>tomcat10x</containerId><type>installed</type>
+          <zipUrlInstaller><url>https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.60/bin/apache-tomcat-10.1.60.zip</url></zipUrlInstaller>
+        </container>
+        <configuration><properties>
+          <cargo.servlet.port>8081</cargo.servlet.port>
+          <cargo.rmi.port>8206</cargo.rmi.port>
+          <cargo.tomcat.ajp.port>8010</cargo.tomcat.ajp.port>
+        </properties></configuration>
+        <deployables><deployable>
+          <groupId>br.com.cepa</groupId><artifactId>cepa-web</artifactId><type>war</type>
+          <properties><context>cepa</context></properties>
+        </deployable></deployables>
+      </configuration>
+    </plugin>
+  </plugins></build>
 </project>

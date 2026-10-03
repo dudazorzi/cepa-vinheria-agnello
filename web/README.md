@@ -4,6 +4,17 @@ Aplicação Java 17 com Servlets e JSP para Apache Tomcat 10.1. A interface segu
 
 ## Executar
 
+### Caminho mais fácil para a equipe (Windows)
+
+1. Instale um [JDK 17 (Temurin)](https://adoptium.net/temurin/releases/?version=17), marcando a opção de adicionar Java ao `PATH` durante a instalação. Abra uma nova janela do Windows depois.
+2. Na pasta principal do repositório, dê dois cliques em `iniciar-web.cmd` (ou use `web/iniciar.cmd`). Também é possível executar o arquivo pelo terminal da IDE.
+3. Na primeira execução, aguarde o download automático de Maven, Tomcat e dependências.
+4. Abra `http://localhost:8081/cepa/`. Para encerrar, pressione Ctrl+C na janela do inicializador.
+
+O inicializador usa o Maven Wrapper (`mvnw.cmd`). Não é necessário instalar Maven nem Tomcat separadamente. O site usa a porta 8081 para não conflitar com um Tomcat local na porta 8080. É necessário acesso à internet na primeira execução.
+
+### Execução manual com Tomcat instalado
+
 1. Use Java 17, Maven 3.9+ e Tomcat 10.1. Nesta máquina foram instalados Temurin 17, Maven 3.9.16 e Tomcat 10.1.60. Abra um novo terminal para carregar o `PATH` e as variáveis de usuário.
 2. Na pasta `web`, execute `mvn clean package`.
 3. Copie `target/cepa.war` para `%CATALINA_HOME%\webapps\cepa.war` e inicie o Tomcat com `%CATALINA_HOME%\bin\catalina.bat run`.
