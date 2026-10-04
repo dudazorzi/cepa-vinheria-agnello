@@ -1,7 +1,7 @@
 package br.com.cepa.web;
 
 import br.com.cepa.data.DemoWineRepository;
-import br.com.cepa.data.FirestoreWineRepository;
+import br.com.cepa.data.FileWineRepository;
 import br.com.cepa.data.WineRepository;
 import br.com.cepa.model.Wine;
 import jakarta.servlet.ServletException;
@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,20 +28,19 @@ public final class CepaServlet extends HttpServlet {
     private String adminPassword;
 
     @Override public void init() {
-        String projectId = System.getenv("FIREBASE_PROJECT_ID");
-        String credentials = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
+        String dataFile = System.getenv("CEPA_DATA_FILE");
         adminPassword = System.getenv("CEPA_ADMIN_PASSWORD");
-        if (projectId == null || projectId.isBlank() || credentials == null || credentials.isBlank()) {
+        if (dataFile == null || dataFile.isBlank()) {
             repository = new DemoWineRepository();
             if (adminPassword == null || adminPassword.isBlank()) adminPassword = "cepa-demo";
             return;
         }
         if (adminPassword == null || adminPassword.isBlank()) {
-            startupError = "Configure CEPA_ADMIN_PASSWORD para proteger as gravações no Firestore.";
+            startupError = "Configure CEPA_ADMIN_PASSWORD para proteger as gravações no catálogo persistente.";
             return;
         }
-        try { repository = new FirestoreWineRepository(projectId); }
-        catch (Exception ex) { startupError = "Não foi possível conectar ao Firestore: " + ex.getMessage(); }
+        try { repository = new FileWineRepository(Path.of(dataFile)); }
+        catch (Exception ex) { startupError = "Não foi possível abrir o catálogo persistente: " + ex.getMessage(); }
     }
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
